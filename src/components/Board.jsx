@@ -5,7 +5,7 @@ import '../styles/board.css';
 import Piece from './Piece.jsx';
 import Square from './Square.jsx';
 import Player from './Player.jsx';
-import { updatedPosition } from './gameLogic';
+import { updatedPosition, jumpHappend } from '../js/gameLogic';
 
 function Board(props){
 
@@ -30,10 +30,10 @@ function Board(props){
       let pos2 = updatedPosition({row: clicked.row, col: clicked.col}, {row: row, col: col}, turn, JSON.parse(JSON.stringify(position)));
       if (JSON.stringify(pos1) !== JSON.stringify(pos2)){
         setPosition(pos2);
-        console.log(turn);
-        setTurn((turn === 'b') ? 'w' : 'b');
+        if (!jumpHappend(pos1, pos2, turn)){
+          setTurn((turn === 'b') ? 'w' : 'b');
+        }
       } 
-
     }
     setClicked({row, col});
   }
